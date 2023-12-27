@@ -1,1 +1,1 @@
-﻿
+﻿System.Console.WriteLine("Advent Of Code");
