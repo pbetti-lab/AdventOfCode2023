@@ -8,14 +8,10 @@ namespace AdventOfCode.Logic.Day02
 {
 	public class CubeConundrum
 	{
-		public CubeConundrum(string validCubeSetConfiguration)
+		public CubeConundrum()
 		{
-			ValidCubeSetConfiguration = CubeConundrumParser.GetCubeSet(validCubeSetConfiguration);
-
 			CubeGames = new List<CubeGame>();	
 		}
-
-		public CubeSet ValidCubeSetConfiguration { get; private set; }
         
 		public List<CubeGame> CubeGames { get; set; }
 		
@@ -24,12 +20,14 @@ namespace AdventOfCode.Logic.Day02
 			CubeGames.Add(CubeConundrumParser.GetCubeGame(cubeGame));
 		}
 
-		public IEnumerable<int> GetValidGameIds()
+		public IEnumerable<int> GetValidGameIds(string validCubeSetConfigurationText)
 		{
+			var validCubeSetConfiguration = CubeConundrumParser.GetCubeSet(validCubeSetConfigurationText);
+
 			Func<CubeSet, bool> isValidSet = set => 
-				   set.RedCubesNumber <= ValidCubeSetConfiguration.RedCubesNumber
-				&& set.GreenCubesNumber <= ValidCubeSetConfiguration.GreenCubesNumber
-				&& set.BlueCubesNumber <= ValidCubeSetConfiguration.BlueCubesNumber;
+				   set.RedCubesNumber <= validCubeSetConfiguration.RedCubesNumber
+				&& set.GreenCubesNumber <= validCubeSetConfiguration.GreenCubesNumber
+				&& set.BlueCubesNumber <= validCubeSetConfiguration.BlueCubesNumber;
 
 			return CubeGames
 				.Where(game => game.CubeSets.All(isValidSet))

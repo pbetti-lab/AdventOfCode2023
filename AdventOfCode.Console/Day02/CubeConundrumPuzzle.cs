@@ -40,13 +40,13 @@ namespace AdventOfCode.Console.Day02
 			if (!IsValidValidCubeSetConfiguration(out string validCubeSetConfiguration))
 				return;
 
-			var cubeConundrum = new CubeConundrum(validCubeSetConfiguration);
+			var cubeConundrum = new CubeConundrum();
 			
 			var inputDocumentContent = File.ReadAllText(inputDocumentFilePath);
 			foreach (string line in inputDocumentContent.Split(Environment.NewLine))
 				cubeConundrum.AddCubeGame(line);
 			
-			var validGameIdsSum = cubeConundrum.GetValidGameIds()
+			var validGameIdsSum = cubeConundrum.GetValidGameIds(validCubeSetConfiguration)
 				.Sum();
 
 			ShowExitMessage($"Cube Conundrum value result is: {validGameIdsSum}");

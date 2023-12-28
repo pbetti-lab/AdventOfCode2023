@@ -4,30 +4,10 @@ namespace AdventOfCode.Logic.Tests.Day02
 {
 	internal class CubeConundrumTests
 	{
-		[TestCase("12 red, 13 green, 14 blue", new int[] { 12, 13, 14 })]
-		[TestCase("12 red, 14 blue, 13 green", new int[] { 12, 13, 14 })]
-		[TestCase("13 green, 14 blue, 12 red", new int[] { 12, 13, 14 })]
-		[TestCase("14 blue", new int[] { 0, 0, 14 })]
-		[TestCase("14 red", new int[] { 14, 0, 0 })]
-		[TestCase("", new int[] { 0, 0, 0 })]
-		public void CubeConundrum_WhenInstantiated_ShouldContainTheValidConfiguration(string validConfiguration, int[] expectedResult)
-		{
-			var cubeConundrum = new CubeConundrum(validConfiguration);
-			
-			Assert.Multiple(() =>
-			{
-				Assert.That(cubeConundrum.ValidCubeSetConfiguration.RedCubesNumber, Is.EqualTo(expectedResult[0]));
-				Assert.That(cubeConundrum.ValidCubeSetConfiguration.GreenCubesNumber, Is.EqualTo(expectedResult[1]));
-				Assert.That(cubeConundrum.ValidCubeSetConfiguration.BlueCubesNumber, Is.EqualTo(expectedResult[2]));
-			});
-		}
-
 		[Test]
 		public void CubeConundrum_WhenInstantiated_ShouldContainEmptyCubeGames()
 		{
-			string validConfiguration = "12 red, 13 green, 14 blue";
-
-			var cubeConundrum = new CubeConundrum(validConfiguration);
+			var cubeConundrum = new CubeConundrum();
 
 			Assert.That(cubeConundrum.CubeGames, Is.Empty);
 		}
@@ -35,9 +15,7 @@ namespace AdventOfCode.Logic.Tests.Day02
 		[Test]
 		public void AddCubeGame_WithValidCubeGameString_ShouldReturnValidGameSets()
 		{
-			string validConfiguration = "12 red, 13 green, 14 blue";
-
-			var cubeConundrum = new CubeConundrum(validConfiguration);
+			var cubeConundrum = new CubeConundrum();
 			cubeConundrum.AddCubeGame("Game 5: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green");
 
 			Assert.Multiple(() =>
@@ -64,16 +42,15 @@ namespace AdventOfCode.Logic.Tests.Day02
 		[Test]
 		public void GetValidGamesNumber_WithValidGameConfiguration_ShouldReturnValidGameIdsSum()
 		{
-			string validConfiguration = "12 red, 13 green, 14 blue";
-
-			var cubeConundrum = new CubeConundrum(validConfiguration);
+			var cubeConundrum = new CubeConundrum();
 			cubeConundrum.AddCubeGame("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green");
 			cubeConundrum.AddCubeGame("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue");
 			cubeConundrum.AddCubeGame("Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red");
 			cubeConundrum.AddCubeGame("Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red");
 			cubeConundrum.AddCubeGame("Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green");
 
-			int gameIdsSum = cubeConundrum.GetValidGameIds().Sum();
+			string validConfiguration = "12 red, 13 green, 14 blue";
+			int gameIdsSum = cubeConundrum.GetValidGameIds(validConfiguration).Sum();
 
 			Assert.That(gameIdsSum, Is.EqualTo(8));
 		}
