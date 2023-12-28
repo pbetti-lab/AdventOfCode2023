@@ -1,6 +1,6 @@
 ﻿using AdventOfCode.Logic.Day02;
 
-namespace AdventOfCode.Tests.Day02
+namespace AdventOfCode.Logic.Tests.Day02
 {
 	internal class CubeConundrumParserTests
 	{
