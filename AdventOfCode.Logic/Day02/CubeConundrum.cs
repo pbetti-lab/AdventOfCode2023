@@ -1,20 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode.Logic.Day02
+﻿namespace AdventOfCode.Logic.Day02
 {
 	public class CubeConundrum
 	{
+		#region constructors
+
 		public CubeConundrum()
 		{
 			CubeGames = new List<CubeGame>();	
 		}
-        
-		public List<CubeGame> CubeGames { get; set; }
+
+		#endregion
+
+		#region properties
 		
+		public List<CubeGame> CubeGames { get; set; }
+
+		#endregion
+
+		#region public methods
+
 		public void AddCubeGame(string cubeGame) 
 		{
 			CubeGames.Add(CubeConundrumParser.GetCubeGame(cubeGame));
@@ -24,7 +28,7 @@ namespace AdventOfCode.Logic.Day02
 		{
 			var validCubeSetConfiguration = CubeConundrumParser.GetCubeSet(validCubeSetConfigurationText);
 
-			Func<CubeSet, bool> isValidSet = set => 
+			bool isValidSet(CubeSet set) =>
 				   set.RedCubesNumber <= validCubeSetConfiguration.RedCubesNumber
 				&& set.GreenCubesNumber <= validCubeSetConfiguration.GreenCubesNumber
 				&& set.BlueCubesNumber <= validCubeSetConfiguration.BlueCubesNumber;
@@ -33,6 +37,20 @@ namespace AdventOfCode.Logic.Day02
 				.Where(game => game.CubeSets.All(isValidSet))
 				.Select(game => game.Id);
 		}
+
+		public IEnumerable<CubeSet> GetValidCubeSetConfigurationPerGame()
+		{
+			return CubeGames
+				.Select(game => 
+					new CubeSet(
+						redCubesNumber: game.CubeSets.Max(cube => cube.RedCubesNumber),
+						greenCubesNumber: game.CubeSets.Max(cube => cube.GreenCubesNumber),
+						blueCubesNumbers: game.CubeSets.Max(cube => cube.BlueCubesNumber)
+					)
+				);
+		}
+
+		#endregion
 	}
 
 }
