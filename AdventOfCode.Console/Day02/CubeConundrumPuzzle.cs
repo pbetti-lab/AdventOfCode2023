@@ -54,13 +54,21 @@ namespace AdventOfCode.Console.Day02
 
 		private static void InternalPart2()
 		{
-			if (!IsValidInputDocumentFilePath(out string calibrationDocumentFilePath))
+			if (!IsValidInputDocumentFilePath(out string inputDocumentFilePath))
 				return;
-			
-			var calibrationDocumentContent = File.ReadAllText(calibrationDocumentFilePath);
-			var calibrationValuesSum = Trebuchet.GetCalibrationValuesWithLiteralsSum(calibrationDocumentContent);
 
-			ShowExitMessage($"Trebuchet value result is: {calibrationValuesSum}");
+			var cubeConundrum = new CubeConundrum();
+
+			var inputDocumentContent = File.ReadAllText(inputDocumentFilePath);
+			foreach (string line in inputDocumentContent.Split(Environment.NewLine))
+				cubeConundrum.AddCubeGame(line);
+
+			var sumOfCubeColorsMultiplication = cubeConundrum
+				.GetValidCubeSetConfigurationPerGame()
+				.Select(cubeSet => cubeSet.RedCubesNumber * cubeSet.GreenCubesNumber * cubeSet.BlueCubesNumber)
+				.Sum();
+
+			ShowExitMessage($"Cube Conundrum value result is: {sumOfCubeColorsMultiplication}");
 		}
 
 		private static bool IsValidInputDocumentFilePath(out string filePath)
