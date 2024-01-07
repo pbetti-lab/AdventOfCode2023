@@ -16,6 +16,19 @@ namespace AdventOfCode.Console.Day3
 			}
 		}
 
+		public static void Part2()
+		{
+			try
+			{
+				InternalPart2();
+			}
+			catch (Exception ex)
+			{
+				ShowExitMessage($"Warning: error occour during the proccess. Message: {ex.Message}");
+			}
+		}
+
+
 		private static void InternalPart1()
 		{
 			if (!IsValidInputDocumentFilePath(out string inputDocumentFilePath))
@@ -23,10 +36,23 @@ namespace AdventOfCode.Console.Day3
 
 			var inputDocumentContent = File.ReadAllText(inputDocumentFilePath);
 
-			var validGameIdsSum = GearRatios.GetGearPartNumbers(inputDocumentContent)
+			var result = GearRatios.GetGearPartNumbers(inputDocumentContent)
 				.Sum();
 
-			ShowExitMessage($"Gear ratios value result is: {validGameIdsSum}");
+			ShowExitMessage($"Gear ratios value result is: {result}");
+		}
+
+		private static void InternalPart2()
+		{
+			if (!IsValidInputDocumentFilePath(out string inputDocumentFilePath))
+				return;
+
+			var inputDocumentContent = File.ReadAllText(inputDocumentFilePath);
+
+			var result = GearRatios.GetGearRatios(inputDocumentContent)
+				.Sum();
+
+			ShowExitMessage($"Gear ratios value result is: {result}");
 		}
 
 		private static bool IsValidInputDocumentFilePath(out string filePath)

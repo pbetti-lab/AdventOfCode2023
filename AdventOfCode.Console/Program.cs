@@ -167,6 +167,10 @@ switch (puzzleCode)
 
 		GearRatiosPuzzle.Part1();
 		break;
+	case "0302":
+		GearRatiosPuzzle.Part2();
+		break;
+
 	default:
 		Console.WriteLine("Unable to recognize the code. Press any key to exit the window.");
 		Console.ReadLine();
@@ -184,6 +188,7 @@ static string? ShowMenu()
 	Console.WriteLine("0201 - Cube Conundrum - Part 1");
 	Console.WriteLine("0202 - Cube Conundrum - Part 2");
 	Console.WriteLine("0301 - Gear Ratios - Part 1");
+	Console.WriteLine("0302 - Gear Ratios - Part 2");
 	Console.WriteLine(string.Empty);
 
 	return Console.ReadLine();
