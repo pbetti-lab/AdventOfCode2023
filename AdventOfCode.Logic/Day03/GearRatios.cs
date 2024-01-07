@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Logic.Day03
+﻿using System.Diagnostics.SymbolStore;
+
+namespace AdventOfCode.Logic.Day03
 {
 	public class GearRatios
 	{
@@ -8,27 +10,91 @@
 			
 			var schematicLines = schematic.Split(Environment.NewLine);
 
-			bool isSymbolNotPeriods(char ch) => !char.IsLetterOrDigit(ch)
-				&& ch != '.';
-
 			int totalLinesIndex = schematicLines.Length - 1;
 			int totalCharsIndex = schematicLines[0].Length - 1;
 
 			for (int i = 0; i <= totalLinesIndex; i++)
+			{
 				for (int j = 0; j <= totalCharsIndex; j++)
+				{
 					if (char.IsDigit(schematicLines[i][j]))
 					{
 						var validCoordinates = GetValidCoordinatesAroundDigit(totalLinesIndex, totalCharsIndex, i, j);
 
 						bool isThereSymbolNearDigit = validCoordinates
-							.Any(coords => isSymbolNotPeriods(schematicLines[coords.Item1][coords.Item2]));
+							.Any(coords => IsSymbolNotPeriods(schematicLines[coords.Item1][coords.Item2]));
 
 						if (isThereSymbolNearDigit) 
 							result.Add(GetPartNumber(schematicLines[i], ref j, totalCharsIndex));
 					}
+				}
+			}
 
 			return result;
 		}
+
+
+		public static IEnumerable<int> GetGearRatios(string schematic)
+		{
+			var partNumberInfoList = new List<PartNumberInfo>();
+
+			var schematicLines = schematic.Split(Environment.NewLine);
+
+			int totalLinesIndex = schematicLines.Length - 1;
+			int totalCharsIndex = schematicLines[0].Length - 1;
+
+			for (int i = 0; i <= totalLinesIndex; i++)
+			{
+				for (int j = 0; j <= totalCharsIndex; j++)
+				{
+					if (char.IsDigit(schematicLines[i][j]))
+					{
+						var validCoordinates = GetValidCoordinatesAroundDigit(totalLinesIndex, totalCharsIndex, i, j);
+
+						var getSymbolsNearDigit = validCoordinates
+							.Where(coords => IsSymbolNotPeriods(schematicLines[coords.Item1][coords.Item2]));
+
+						foreach (var coords in getSymbolsNearDigit)
+						{
+							int partNumber = GetPartNumber(schematicLines[i], ref j, totalCharsIndex);
+
+							partNumberInfoList.Add(
+								new PartNumberInfo
+								{
+									Symbol = schematicLines[coords.Item1][coords.Item2],
+									PartNumber = partNumber,
+									Row = coords.Item1,
+									Col = coords.Item2,
+								}
+							);
+						}
+					}
+				}
+			}
+
+			return partNumberInfoList.Where(info => info.Symbol == '*')
+				.GroupBy(info =>
+					new { info.Row, info.Col },
+					info => info.PartNumber,
+					(key, g) => new { Count = g.Count(), PartNumbers = g.ToList() })
+				.Where(filteredInfo => filteredInfo.Count == 2)
+				.Select(filteredInfo => filteredInfo.PartNumbers[0] * filteredInfo.PartNumbers[1]);
+		}
+
+		public record PartNumberInfo()
+		{
+			public char Symbol { get; init; }
+
+			public int PartNumber { get; init; }
+
+			public int Row { get; init; }
+
+			public int Col { get; init; }
+		}
+
+		private static bool IsSymbolNotPeriods(char ch) => 
+			   !char.IsLetterOrDigit(ch)
+			&& ch != '.';
 
 		private static int GetPartNumber(string row, ref int colIndex, int totalColsIndex)
 		{ 

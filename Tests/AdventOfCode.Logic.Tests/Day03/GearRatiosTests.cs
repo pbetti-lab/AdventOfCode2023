@@ -18,10 +18,30 @@ namespace AdventOfCode.Logic.Tests.Day03
 				+ Environment.NewLine + "...$.*...."
 				+ Environment.NewLine + ".664.598..";
 
-			var gearRatios = new GearRatios();
 			var result = GearRatios.GetGearPartNumbers(gearRatiosSchematic);
 
 			var expectedResult = new[] { 467, 35, 633, 617, 592, 755, 664, 598 };
+
+			Assert.That(result, Is.EquivalentTo(expectedResult));
+		}
+
+		[Test]
+		public void GetGearRatios_WithValidSchematic_ReturnValidGearRatios()
+		{
+			string gearRatiosSchematic = "467..114.."
+				+ Environment.NewLine + "...*......"
+				+ Environment.NewLine + "..35..633."
+				+ Environment.NewLine + "......#..."
+				+ Environment.NewLine + "617*......"
+				+ Environment.NewLine + ".....+.58."
+				+ Environment.NewLine + "..592....."
+				+ Environment.NewLine + "......755."
+				+ Environment.NewLine + "...$.*...."
+				+ Environment.NewLine + ".664.598..";
+
+			var result = GearRatios.GetGearRatios(gearRatiosSchematic);
+
+			var expectedResult = new[] { 16345, 451490 };
 
 			Assert.That(result, Is.EquivalentTo(expectedResult));
 		}
