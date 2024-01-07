@@ -46,10 +46,10 @@ namespace AdventOfCode.Console.Day02
 			foreach (string line in inputDocumentContent.Split(Environment.NewLine))
 				cubeConundrum.AddCubeGame(line);
 			
-			var validGameIdsSum = cubeConundrum.GetValidGameIds(validCubeSetConfiguration)
+			var result = cubeConundrum.GetValidGameIds(validCubeSetConfiguration)
 				.Sum();
 
-			ShowExitMessage($"Cube Conundrum value result is: {validGameIdsSum}");
+			ShowExitMessage($"Cube Conundrum value result is: {result}");
 		}
 
 		private static void InternalPart2()
@@ -63,12 +63,12 @@ namespace AdventOfCode.Console.Day02
 			foreach (string line in inputDocumentContent.Split(Environment.NewLine))
 				cubeConundrum.AddCubeGame(line);
 
-			var sumOfCubeColorsMultiplication = cubeConundrum
+			var result = cubeConundrum
 				.GetValidCubeSetConfigurationPerGame()
 				.Select(cubeSet => cubeSet.RedCubesNumber * cubeSet.GreenCubesNumber * cubeSet.BlueCubesNumber)
 				.Sum();
 
-			ShowExitMessage($"Cube Conundrum value result is: {sumOfCubeColorsMultiplication}");
+			ShowExitMessage($"Cube Conundrum value result is: {result}");
 		}
 
 		private static bool IsValidInputDocumentFilePath(out string filePath)

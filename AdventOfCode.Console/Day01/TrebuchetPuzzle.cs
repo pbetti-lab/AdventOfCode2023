@@ -40,9 +40,9 @@ namespace AdventOfCode.Console.Day01
 				return;
 
 			var calibrationDocumentContent = File.ReadAllText(calibrationDocumentFilePath);
-			var calibrationValuesSum = Trebuchet.GetCalibrationValuesSum(calibrationDocumentContent);
+			var result = Trebuchet.GetCalibrationValuesSum(calibrationDocumentContent);
 
-			ShowExitMessage($"Trebuchet value result is: {calibrationValuesSum}");
+			ShowExitMessage($"Trebuchet value result is: {result}");
 		}
 
 		private static void InternalPart2()
@@ -51,9 +51,9 @@ namespace AdventOfCode.Console.Day01
 				return;
 			
 			var calibrationDocumentContent = File.ReadAllText(calibrationDocumentFilePath);
-			var calibrationValuesSum = Trebuchet.GetCalibrationValuesWithLiteralsSum(calibrationDocumentContent);
+			var result = Trebuchet.GetCalibrationValuesWithLiteralsSum(calibrationDocumentContent);
 
-			ShowExitMessage($"Trebuchet value result is: {calibrationValuesSum}");
+			ShowExitMessage($"Trebuchet value result is: {result}");
 		}
 
 		private static bool IsValidCalibrationDocumentFilePath(out string filePath)
